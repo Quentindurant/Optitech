@@ -16,6 +16,21 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
+            # Créer le dossier s'il n'existe pas
+            mkdir -p ${{ secrets.PROJECT_PATH }}
+            
+            # Aller dans le dossier du projet
             cd ${{ secrets.PROJECT_PATH }}
+            
+            # Vérifier si c'est un dépôt git, sinon l'initialiser
+            if [ ! -d .git ]; then
+              git init
+              git remote add origin ${{ github.server_url }}/${{ github.repository }}.git
+            fi
+            
+            # Configurer git pour le dossier
             sudo git config --global --add safe.directory ${{ secrets.PROJECT_PATH }}
-            sudo git pull
+            
+            # Récupérer les changements
+            git fetch origin main
+            git reset --hard origin/main
