@@ -16,21 +16,28 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            # Créer le dossier s'il n'existe pas
-            mkdir -p ${{ secrets.PROJECT_PATH }}
+            # Définir les permissions
+            sudo chown -R ${{ secrets.SERVER_USERNAME }}:${{ secrets.SERVER_USERNAME }} ${{ secrets.PROJECT_PATH }}
+            sudo chmod -R 755 ${{ secrets.PROJECT_PATH }}
             
-            # Aller dans le dossier du projet
+            # Créer le dossier si nécessaire
+            sudo mkdir -p ${{ secrets.PROJECT_PATH }}
+            
+            # Aller dans le dossier
             cd ${{ secrets.PROJECT_PATH }}
             
-            # Vérifier si c'est un dépôt git, sinon l'initialiser
+            # Initialiser git si nécessaire
             if [ ! -d .git ]; then
               git init
               git remote add origin ${{ github.server_url }}/${{ github.repository }}.git
             fi
             
-            # Configurer git pour le dossier
-            sudo git config --global --add safe.directory ${{ secrets.PROJECT_PATH }}
+            # Configurer git
+            git config --global --add safe.directory ${{ secrets.PROJECT_PATH }}
             
             # Récupérer les changements
             git fetch origin main
             git reset --hard origin/main
+            
+            # Mettre à jour les permissions après le pull
+            sudo chown -R www-data:www-data ${{ secrets.PROJECT_PATH }}
