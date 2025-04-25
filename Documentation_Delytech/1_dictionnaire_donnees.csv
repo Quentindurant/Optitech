@@ -1,0 +1,57 @@
+Table;Champ;Type;Taille;Description;Contrainte
+Users;id;INT;11;Identifiant unique de l'utilisateur;PK, Auto Increment
+;name;VARCHAR;100;Nom complet de l'utilisateur;NOT NULL
+;email;VARCHAR;255;Adresse email de l'utilisateur;NOT NULL, UNIQUE
+;password;VARCHAR;255;Mot de passe hashé;NOT NULL
+;role;ENUM;-;Role (admin, technicien);NOT NULL
+;phone;VARCHAR;20;Numéro de téléphone;-
+;address;TEXT;-;Adresse complète;-
+;is_active;BOOLEAN;-;Statut actif/inactif;DEFAULT true
+;;;;;
+Regions;id;INT;11;Identifiant unique de la région;PK, Auto Increment
+;name;VARCHAR;100;Nom de la région;NOT NULL
+;code;VARCHAR;10;Code de la région;NOT NULL
+;;;;;
+Interventions;id;INT;11;Identifiant unique de l'intervention;PK, Auto Increment
+;title;VARCHAR;255;Titre de l'intervention;NOT NULL
+;description;TEXT;-;Description détaillée;NOT NULL
+;status;ENUM;-;Statut (planifié, en cours, terminé, annulé);NOT NULL
+;start_date;DATETIME;-;Date et heure de début;NOT NULL
+;end_date;DATETIME;-;Date et heure de fin;-
+;created_at;TIMESTAMP;-;Date de création;TIMESTAMP
+;updated_at;TIMESTAMP;-;Date de dernière modification;-
+;;;;;
+Partners;id;INT;11;Identifiant unique du partenaire;PK, Auto Increment
+;name;VARCHAR;255;Nom du partenaire;NOT NULL
+;email;VARCHAR;255;Email du partenaire;NOT NULL
+;phone;VARCHAR;20;Téléphone du partenaire;-
+;address;TEXT;-;Adresse du partenaire;-
+;created_at;TIMESTAMP;-;Date de création;TIMESTAMP
+;;;;;
+Clients;id;INT;11;Identifiant unique du client;PK, Auto Increment
+;name;VARCHAR;255;Nom du client;NOT NULL
+;address;TEXT;-;Adresse du client;NOT NULL
+;phone;VARCHAR;20;Téléphone du client;-
+;email;VARCHAR;255;Email du client;-
+;;;;;
+Skills;id;INT;11;Identifiant unique de la compétence;PK, Auto Increment
+;name;VARCHAR;100;Nom de la compétence;NOT NULL
+;description;TEXT;-;Description de la compétence;-
+;;;;;
+TechnicianSkills;id;INT;11;Identifiant unique de la compétence du technicien;PK, Auto Increment
+;level;INT;1;Niveau de compétence (1-5);NOT NULL
+;;;;;
+Ratings;id;INT;11;Identifiant unique de l'évaluation;PK, Auto Increment
+;rating;INT;1;Note (1-5);NOT NULL
+;comment;TEXT;-;Commentaire sur la prestation;-
+;created_at;TIMESTAMP;-;Date de création;TIMESTAMP
+;;;;;
+TechnicianAvailability;id;INT;11;Identifiant unique de la disponibilité;PK, Auto Increment
+;start_date;DATETIME;-;Début de l'indisponibilité;NOT NULL
+;end_date;DATETIME;-;Fin de l'indisponibilité;NOT NULL
+;reason;VARCHAR;255;Raison de l'indisponibilité;-
+;;;;;
+InterventionLogs;id;INT;11;Identifiant unique du log;PK, Auto Increment
+;type;ENUM;-;Type de log (départ, arrivée, pause, reprise, fin);NOT NULL
+;timestamp;TIMESTAMP;-;Horodatage;TIMESTAMP
+;location;POINT;-;Coordonnées GPS;-
